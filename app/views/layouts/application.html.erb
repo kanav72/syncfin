@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Syncfin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
+
+  <%# Navbar %>
+  <% if user_signed_in? %>
+    <nav class="bg-white dark:bg-gray-800 shadow-md py-4 px-6 flex justify-between items-center">
+      <div class="text-2xl font-bold text-blue-600">
+        Syncfin
+      </div>
+      <div class="space-x-6">
+        <%= link_to "Dashboard", dashboard_path, class: "text-gray-700 dark:text-gray-300 hover:text-blue-500 font-semibold" %>
+        <%= link_to "Upload Statement", new_bank_statement_path, class: "text-gray-700 dark:text-gray-300 hover:text-blue-500 font-semibold" %>
+        <%= form_with(url: destroy_user_session_path, method: :delete, class: "inline-block") do %>
+          <%= submit_tag "Logout", class: "bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg shadow-md transition duration-200 cursor-pointer" %>
+        <% end %>
+      </div>
+    </nav>
+  <% end %>
+
+  <%# Main Content %>
+  <div class="container mx-auto mt-10 px-6">
+    <%= yield %>
+  </div>
+
+</body>
+</html>

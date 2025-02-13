@@ -1,0 +1,16 @@
+<h1 class="text-3xl font-bold mb-4">Your Bank Statements</h1>
+
+<% if @bank_statements.any? %>
+  <ul class="space-y-3">
+    <% @bank_statements.each do |statement| %>
+      <li class="bg-gray-100 p-4 rounded-lg shadow">
+        <%= link_to statement.file.filename, rails_blob_path(statement.file, disposition: "attachment"), class: "text-blue-500 font-bold" %>
+        <%= link_to "🗑 Delete", bank_statement_path(statement), method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-500 ml-4" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-gray-500">No bank statements uploaded yet.</p>
+<% end %>
+
+<%= link_to "Upload a New File", new_bank_statement_path, class: "mt-6 block bg-blue-500 text-white px-4 py-2 rounded-lg text-center" %>

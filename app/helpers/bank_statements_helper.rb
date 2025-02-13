@@ -1,0 +1,2 @@
+module BankStatementsHelper
+end
