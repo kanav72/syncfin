@@ -5,5 +5,5 @@ Rails.application.routes.draw do
 
   get "/dashboard", to: "users#dashboard", as: :dashboard
   
-  resources :bank_statements, only: [:index, :new, :create, :destroy]
+  resources :bank_statements, only: [:index, :new, :create, :edit, :update, :destroy, :show]
 end

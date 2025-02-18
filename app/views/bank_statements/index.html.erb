@@ -1,16 +1,30 @@
-<h1 class="text-3xl font-bold mb-4">Your Bank Statements</h1>
+<h1 class="text-3xl font-bold mb-4 dark:text-gray-100">📊 Dashboard</h1>
+
+<h2 class="text-2xl font-semibold mb-4 dark:text-gray-100">📜 Your Uploaded Statements</h2>
 
 <% if @bank_statements.any? %>
-  <ul class="space-y-3">
-    <% @bank_statements.each do |statement| %>
-      <li class="bg-gray-100 p-4 rounded-lg shadow">
-        <%= link_to statement.file.filename, rails_blob_path(statement.file, disposition: "attachment"), class: "text-blue-500 font-bold" %>
-        <%= link_to "🗑 Delete", bank_statement_path(statement), method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-500 ml-4" %>
-      </li>
-    <% end %>
-  </ul>
+  <table class="min-w-full bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">
+    <thead>
+      <tr>
+        <th class="py-2 px-4 border-b text-gray-900 dark:text-gray-100">File Name</th>
+        <th class="py-2 px-4 border-b text-gray-900 dark:text-gray-100">Uploaded On</th>
+        <th class="py-2 px-4 border-b text-gray-900 dark:text-gray-100">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bank_statements.each do |bank_statement| %>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+          <td class="py-2 px-4 border-b text-gray-700 dark:text-gray-300"><%= bank_statement.file.filename %></td>
+          <td class="py-2 px-4 border-b text-gray-700 dark:text-gray-300"><%= bank_statement.created_at.strftime("%B %d, %Y %H:%M") %></td>
+          <td class="py-2 px-4 border-b">
+            <%= link_to "🗑 Delete", bank_statement_path(bank_statement), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% else %>
-  <p class="text-gray-500">No bank statements uploaded yet.</p>
+  <p class="text-gray-700 dark:text-gray-300">No files uploaded yet.</p>
 <% end %>
 
-<%= link_to "Upload a New File", new_bank_statement_path, class: "mt-6 block bg-blue-500 text-white px-4 py-2 rounded-lg text-center" %>
+<%= link_to "📂 Upload New Statement", new_bank_statement_path, class: "mt-6 inline-block bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700" %>
