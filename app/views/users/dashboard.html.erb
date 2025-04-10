@@ -1,50 +1,81 @@
 <div class="max-w-5xl mx-auto">
-
-   <%# Dashboard Header  %>
-  <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-6">📊 Dashboard</h1>
-
-   <%# Upload Section  %>
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg mb-6">
-    <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">📂 Upload CIBC Bank Statement</h2>
-    
-    <%= form_with model: BankStatement.new, url: bank_statements_path, local: true, html: { multipart: true }, class: "space-y-4" do |f| %>
-      <div>
-        <%= f.file_field :file, class: "w-full px-4 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500" %>
-      </div>
-      <div>
-        <%= f.submit "Upload", class: "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300" %>
-      </div>
-    <% end %>
-  </div>
-
-   <%# Uploaded Files Section  %>
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
-    <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">📜 Your Uploaded Statements</h2>
-    
-    <% if @bank_statements.any? %>
-      <table class="w-full text-left border-collapse">
-        <thead>
-          <tr class="border-b text-gray-600 dark:text-gray-300">
-            <th class="py-2">File Name</th>
-            <th class="py-2">Uploaded On</th>
-            <th class="py-2 text-right">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @bank_statements.each do |statement| %>
-            <tr class="border-b hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-              <td class="py-3"><%= statement.file.filename %></td>
-              <td class="py-3"><%= statement.created_at.strftime("%B %d, %Y %H:%M") %></td>
-              <td class="py-3 text-right">
-                <%= link_to "Edit", bank_statement_path(statement), class: "text-red-500 hover:text-red-700 font-semibold" %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% else %>
-      <p class="text-gray-600 dark:text-gray-400">No statements uploaded yet.</p>
-    <% end %>
-  </div>
-
+    <%# Dashboard Header %>
+    <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-6">📊 Dashboard</h1>
+    <%# Upload Section %>
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg mb-6">
+        <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">📂 Upload CIBC Bank Statement</h2>
+        <%= form_with model: BankStatement.new, url: bank_statements_path, local: true, html: { multipart: true }, class: "space-y-4" do |f| %>
+        <div>
+            <%= f.file_field :file, accept: ".xls,.xlsx", class: "w-full px-4 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500" %>
+        </div>
+        <div>
+            <%= f.submit "Upload", class: "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300" %>
+        </div>
+        <% end %>
+    </div>
+    <%# Uploaded Files Section %>
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+        <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">📜 Your Uploaded Statements</h2>
+        <% if @bank_statements.any? %>
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="border-b text-gray-600 dark:text-gray-300">
+                    <th class="py-2 px-4">File Name</th>
+                    <th class="py-2 px-4">Bank Name</th>
+                    <th class="py-2 px-4">Account Number</th>
+                    <th class="py-2 px-4">Period Start</th>
+                    <th class="py-2 px-4">Period End</th>
+                    <th class="py-2 px-4">Transactions</th>
+                    <th class="py-2 px-4 text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @bank_statements.each do |statement| %>
+                <tr class="border-b hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                    <td class="py-3 px-4">
+                        <%= statement.file.filename %>
+                    </td>
+                    <td class="py-3 px-4">
+                        <%= statement.bank_name || "N/A" %>
+                    </td>
+                    <td class="py-3 px-4">
+                        <%= statement.account_number || "N/A" %>
+                    </td>
+                    <td class="py-3 px-4">
+                        <%= statement.period_start&.strftime("%B %d, %Y") || "N/A" %>
+                    </td>
+                    <td class="py-3 px-4">
+                        <%= statement.period_end&.strftime("%B %d, %Y") || "N/A" %>
+                    </td>
+                    <td class="py-3 px-4">
+                        <% if statement.statement_records.any? %>
+                        <details>
+                            <summary class="cursor-pointer text-blue-500 hover:text-blue-700">
+                                <%= pluralize(statement.statement_records.count, "transaction") %>
+                            </summary>
+                            <ul class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                                <% statement.statement_records.each do |record| %>
+                                <li>
+                                    <%= record.date&.strftime("%Y-%m-%d") || "N/A" %>:
+                                    <%= record.description || "No description" %> -
+                                    <%= number_to_currency(record.amount) %>
+                                </li>
+                                <% end %>
+                            </ul>
+                        </details>
+                        <% else %>
+                        No transactions
+                        <% end %>
+                    </td>
+                    <td class="py-3 px-4 text-right">
+                        <%= link_to "Edit", bank_statement_path(statement), class: "text-red-500 hover:text-red-700 font-semibold" %>
+                    </td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+        <% else %>
+        <p class="text-gray-600 dark:text-gray-400">No statements uploaded yet.</p>
+        <% end %>
+    </div>
 </div>

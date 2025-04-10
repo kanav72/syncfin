@@ -14,34 +14,34 @@ class BankStatementsController < ApplicationController
     # redirect_to rails_blob_path(@bank_statement.file, disposition: "attachment")
   end
 
-    def create
-  Rails.logger.debug "Received params: #{params.inspect}"  # Debugging line
+  def create
+    Rails.logger.debug "Received params: #{params.inspect}"  # Debugging line
 
-  if params[:bank_statement].blank?
-    Rails.logger.error "❌ bank_statement parameter is missing!"
-    redirect_to new_bank_statement_path, alert: "No file selected."
-    return
-  end
-
-  @bank_statement = current_user.bank_statements.new(bank_statement_params)
-
-  if @bank_statement.save
-    Rails.logger.info "✅ File saved successfully: #{@bank_statement.file.filename}"
-
-    begin
-      @bank_statement.process_excel
-      Rails.logger.info "✅ Excel file processed successfully."
-    rescue => e
-      Rails.logger.error "❌ Error processing Excel file: #{e.message}"
-      flash[:alert] = "File uploaded successfully, but there was an error processing it: #{e.message}"
+    if params[:bank_statement].blank?
+      Rails.logger.error "❌ bank_statement parameter is missing!"
+      redirect_to new_bank_statement_path, alert: "No file selected."
+      return
     end
 
-    redirect_to bank_statements_path, notice: "File uploaded successfully."
-  else
-    Rails.logger.error "❌ Failed to save file: #{@bank_statement.errors.full_messages.join(", ")}"
-    render :new, status: :unprocessable_entity, alert: @bank_statement.errors.full_messages.join(", ")
+    @bank_statement = current_user.bank_statements.new(bank_statement_params)
+
+    if @bank_statement.save
+      Rails.logger.info "✅ File saved successfully: #{@bank_statement.file.filename}"
+
+      begin
+        @bank_statement.process_excel
+        Rails.logger.info "✅ Excel file processed successfully."
+      rescue => e
+        Rails.logger.error "❌ Error processing Excel file: #{e.message}"
+        flash[:alert] = "File uploaded successfully, but there was an error processing it: #{e.message}"
+      end
+
+      redirect_to bank_statements_path, notice: "File uploaded successfully."
+    else
+      Rails.logger.error "❌ Failed to save file: #{@bank_statement.errors.full_messages.join(", ")}"
+      render :new, status: :unprocessable_entity, alert: @bank_statement.errors.full_messages.join(", ")
+    end
   end
-end
 
   def edit
     @bank_statement = current_user.bank_statements.find(params[:id])

@@ -1,63 +1,54 @@
 <div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 px-6">
-  <div class="w-full max-w-md bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-2xl backdrop-blur-md bg-opacity-80 dark:bg-opacity-60 relative">
-    
-    <%# Glow Effect %>
-    <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full blur-3xl opacity-30"></div>
-
-    <%#  Title & Welcome Message %>
-    <div class="text-center mb-6">
-      <h2 class="text-3xl font-extrabold text-gray-800 dark:text-white">Welcome Back 👋</h2>
-      <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Sign in to your account</p>
-    </div>
-
-    <%# Login Form %>
-    <%= form_with model: resource, as: resource_name, url: session_path(resource_name), class: "space-y-5" do |f| %>
-
-      <%# Email Field %>
-      <div>
-        <label class="block text-gray-600 dark:text-gray-300 mb-2 text-sm font-medium">Email</label>
-        <div class="relative">
-          <span class="absolute left-3 top-3 text-gray-400">
-            📧
-          </span>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true,
-            class: "w-full px-4 py-3 pl-10 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-50 dark:bg-gray-800 dark:text-white" %>
+    <div class="w-full max-w-md bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-2xl backdrop-blur-md bg-opacity-80 dark:bg-opacity-60 relative">
+        <%# Glow Effect %>
+        <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full blur-3xl opacity-30"></div>
+        <%#  Title & Welcome Message %>
+        <div class="text-center mb-6">
+            <h2 class="text-3xl font-extrabold text-gray-800 dark:text-white">Welcome Back 👋</h2>
+            <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Sign in to your account</p>
         </div>
-      </div>
-
-      <%# Password Field %>
-      <div>
-        <label class="block text-gray-600 dark:text-gray-300 mb-2 text-sm font-medium">Password</label>
-        <div class="relative">
-          <span class="absolute left-3 top-3 text-gray-400">
-            🔒
-          </span>
-          <%= f.password_field :password, autocomplete: "current-password", required: true,
+        <%# Login Form %>
+        <%= form_with model: resource, as: resource_name, url: session_path(resource_name), class: "space-y-5" do |f| %>
+        <%# Email Field %>
+        <div>
+            <label class="block text-gray-600 dark:text-gray-300 mb-2 text-sm font-medium">Email</label>
+            <div class="relative">
+                <span class="absolute left-3 top-3 text-gray-400">
+                    📧
+                </span>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true,
             class: "w-full px-4 py-3 pl-10 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-50 dark:bg-gray-800 dark:text-white" %>
+            </div>
         </div>
-      </div>
-
-      <%# Remember Me & Forgot Password %>
-      <div class="flex items-center justify-between">
-        <label class="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300">
-          <%= f.check_box :remember_me, class: "rounded text-blue-500 focus:ring-blue-400" %>
-          <span>Remember Me</span>
-        </label>
-        <%= link_to "Forgot password?", new_password_path(resource_name), class: "text-blue-500 hover:underline text-sm" %>
-      </div>
-
-      <%# Login Button %>
-      <div>
-        <%= f.submit "Sign in", class: "w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-lg transform hover:scale-105" %>
-      </div>
-
-    <% end %>
-
-    <%# Sign Up Link %>
-    <div class="mt-5 text-center">
-      <p class="text-sm text-gray-600 dark:text-gray-400">New here? 
-        <%= link_to "Create an account", new_registration_path(resource_name), class: "text-blue-500 hover:underline font-semibold" %>
-      </p>
+        <%# Password Field %>
+        <div>
+            <label class="block text-gray-600 dark:text-gray-300 mb-2 text-sm font-medium">Password</label>
+            <div class="relative">
+                <span class="absolute left-3 top-3 text-gray-400">
+                    🔒
+                </span>
+                <%= f.password_field :password, autocomplete: "current-password", required: true,
+            class: "w-full px-4 py-3 pl-10 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-50 dark:bg-gray-800 dark:text-white" %>
+            </div>
+        </div>
+        <%# Remember Me & Forgot Password %>
+        <div class="flex items-center justify-between">
+            <label class="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300">
+                <%= f.check_box :remember_me, class: "rounded text-blue-500 focus:ring-blue-400" %>
+                <span>Remember Me</span>
+            </label>
+            <%= link_to "Forgot password?", new_password_path(resource_name), class: "text-blue-500 hover:underline text-sm" %>
+        </div>
+        <%# Login Button %>
+        <div>
+            <%= f.submit "Sign in", class: "w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-lg transform hover:scale-105" %>
+        </div>
+        <% end %>
+        <%# Sign Up Link %>
+        <div class="mt-5 text-center">
+            <p class="text-sm text-gray-600 dark:text-gray-400">New here?
+                <%= link_to "Create an account", new_registration_path(resource_name), class: "text-blue-500 hover:underline font-semibold" %>
+            </p>
+        </div>
     </div>
-  </div>
 </div>
