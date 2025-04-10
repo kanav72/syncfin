@@ -1,38 +1,31 @@
 <div class="max-w-md mx-auto mt-10 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
-  <h2 class="text-2xl font-bold text-gray-800 dark:text-white text-center mb-6">Sign Up</h2>
-
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :post, class: "space-y-4" }) do |f| %>
-
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white text-center mb-6">Sign Up</h2>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :post, class: "space-y-4" }) do |f| %>
     <%# Email Field %>
     <div>
-      <%= f.label :email, class: "block text-gray-700 dark:text-white font-semibold mb-1" %>
-      <%= f.email_field :email, autofocus: true, class: "w-full px-4 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500" %>
+        <%= f.label :email, class: "block text-gray-700 dark:text-white font-semibold mb-1" %>
+        <%= f.email_field :email, autofocus: true, class: "w-full px-4 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500" %>
     </div>
-
     <%# Password Field %>
     <div>
-      <%= f.label :password, class: "block text-gray-700 dark:text-white font-semibold mb-1" %>
-      <%= f.password_field :password, class: "w-full px-4 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500" %>
-      <small class="text-gray-500 dark:text-gray-300">6 characters minimum</small>
+        <%= f.label :password, class: "block text-gray-700 dark:text-white font-semibold mb-1" %>
+        <%= f.password_field :password, class: "w-full px-4 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500" %>
+        <small class="text-gray-500 dark:text-gray-300">6 characters minimum</small>
     </div>
-
     <%# Password Confirmation %>
     <div>
-      <%= f.label :password_confirmation, class: "block text-gray-700 dark:text-white font-semibold mb-1" %>
-      <%= f.password_field :password_confirmation, class: "w-full px-4 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500" %>
+        <%= f.label :password_confirmation, class: "block text-gray-700 dark:text-white font-semibold mb-1" %>
+        <%= f.password_field :password_confirmation, class: "w-full px-4 py-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500" %>
     </div>
-
     <%# Submit Button %>
     <div>
-      <%= f.submit "Sign Up", class: "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300" %>
+        <%= f.submit "Sign Up", class: "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300" %>
     </div>
-
-  <% end %>
-
-  <%# Log In Link %>
-  <div class="text-center mt-4">
-    <p class="text-gray-600 dark:text-gray-300">Already have an account?  
-      <%= link_to "Log in", new_session_path(resource_name), class: "text-blue-600 hover:text-blue-700 font-semibold" %>
-    </p>
-  </div>
+    <% end %>
+    <%# Log In Link %>
+    <div class="text-center mt-4">
+        <p class="text-gray-600 dark:text-gray-300">Already have an account?
+            <%= link_to "Log in", new_session_path(resource_name), class: "text-blue-600 hover:text-blue-700 font-semibold" %>
+        </p>
+    </div>
 </div>

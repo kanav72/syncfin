@@ -1,17 +1,18 @@
 <h1 class="text-3xl font-bold mb-4">Bank Statement</h1>
-
 <% if @bank_statement.file.attached? %>
-  <p class="text-gray-700"><strong>File Name:</strong> <%= @bank_statement.file.filename %></p>
-  <p class="text-gray-700"><strong>Uploaded On:</strong> <%= @bank_statement.created_at.strftime("%B %d, %Y %H:%M") %></p>
-
-  <%= link_to "⬇ Download File", 
+<p class="text-gray-700"><strong>File Name:</strong>
+    <%= @bank_statement.file.filename %>
+</p>
+<p class="text-gray-700"><strong>Uploaded On:</strong>
+    <%= @bank_statement.created_at.strftime("%B %d, %Y %H:%M") %>
+</p>
+<%= link_to "⬇ Download File", 
               rails_blob_path(@bank_statement.file, disposition: "attachment"), 
               class: "block mt-2 bg-blue-500 text-black font-bold px-4 py-2 rounded-lg text-center hover:bg-blue-600 shadow-lg",
               download: true %>
 <% end %>
-
 <div class="mt-6">
-  <%= button_to "🗑 Delete", 
+    <%= button_to "🗑 Delete", 
         bank_statement_path(@bank_statement), 
         method: :delete, 
         form: { data: { turbo_confirm: "Are you sure?" } }, 

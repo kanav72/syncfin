@@ -1,30 +1,43 @@
 <h1 class="text-3xl font-bold mb-4 dark:text-gray-100">📊 Dashboard</h1>
-
 <h2 class="text-2xl font-semibold mb-4 dark:text-gray-100">📜 Your Uploaded Statements</h2>
-
 <% if @bank_statements.any? %>
-  <table class="min-w-full bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">
+<table class="min-w-full bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">
     <thead>
-      <tr>
-        <th class="py-2 px-4 border-b text-gray-900 dark:text-gray-100">File Name</th>
-        <th class="py-2 px-4 border-b text-gray-900 dark:text-gray-100">Uploaded On</th>
-        <th class="py-2 px-4 border-b text-gray-900 dark:text-gray-100">Actions</th>
-      </tr>
+        <tr>
+            <th class="py-2 px-4 border-b text-gray-900 dark:text-gray-100">File Name</th>
+            <th class="py-2 px-4 border-b text-gray-900 dark:text-gray-100">Bank Name</th>
+            <th class="py-2 px-4 border-b text-gray-900 dark:text-gray-100">Account Number</th>
+            <th class="py-2 px-4 border-b text-gray-900 dark:text-gray-100">Period Start</th>
+            <th class="py-2 px-4 border-b text-gray-900 dark:text-gray-100">Period End</th>
+            <th class="py-2 px-4 border-b text-gray-900 dark:text-gray-100">Actions</th>
+        </tr>
     </thead>
     <tbody>
-      <% @bank_statements.each do |bank_statement| %>
+        <% @bank_statements.each do |bank_statement| %>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-          <td class="py-2 px-4 border-b text-gray-700 dark:text-gray-300"><%= bank_statement.file.filename %></td>
-          <td class="py-2 px-4 border-b text-gray-700 dark:text-gray-300"><%= bank_statement.created_at.strftime("%B %d, %Y %H:%M") %></td>
-          <td class="py-2 px-4 border-b">
-            <%= link_to "🗑 Delete", bank_statement_path(bank_statement), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" %>
-          </td>
+            <td class="py-2 px-4 border-b text-gray-700 dark:text-gray-300">
+                <%= bank_statement.file.filename %>
+            </td>
+            <td class="py-2 px-4 border-b text-gray-700 dark:text-gray-300">
+                <%= bank_statement.bank_name || "Not Available" %>
+            </td>
+            <td class="py-2 px-4 border-b text-gray-700 dark:text-gray-300">
+                <%= bank_statement.account_number || "Not Available" %>
+            </td>
+            <td class="py-2 px-4 border-b text-gray-700 dark:text-gray-300">
+                <%= bank_statement.period_start ? bank_statement.period_start.strftime("%B %d, %Y") : "Not Available" %>
+            </td>
+            <td class="py-2 px-4 border-b text-gray-700 dark:text-gray-300">
+                <%= bank_statement.period_end ? bank_statement.period_end.strftime("%B %d, %Y") : "Not Available" %>
+            </td>
+            <td class="py-2 px-4 border-b">
+                <%= link_to "🗑 Delete", bank_statement_path(bank_statement), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" %>
+            </td>
         </tr>
-      <% end %>
+        <% end %>
     </tbody>
-  </table>
+</table>
 <% else %>
-  <p class="text-gray-700 dark:text-gray-300">No files uploaded yet.</p>
+<p class="text-gray-700 dark:text-gray-300">No files uploaded yet.</p>
 <% end %>
-
 <%= link_to "📂 Upload New Statement", new_bank_statement_path, class: "mt-6 inline-block bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700" %>

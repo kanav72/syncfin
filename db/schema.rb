@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_02_231619) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_17_003400) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -46,7 +46,21 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_02_231619) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "bank_name"
+    t.string "account_number"
+    t.date "period_start"
+    t.date "period_end"
     t.index ["user_id"], name: "index_bank_statements_on_user_id"
+  end
+
+  create_table "statement_records", force: :cascade do |t|
+    t.bigint "bank_statement_id", null: false
+    t.date "date"
+    t.string "description"
+    t.decimal "amount", precision: 15, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bank_statement_id"], name: "index_statement_records_on_bank_statement_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -64,4 +78,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_02_231619) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bank_statements", "users"
+  add_foreign_key "statement_records", "bank_statements"
 end
