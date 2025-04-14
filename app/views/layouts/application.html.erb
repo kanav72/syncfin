@@ -29,7 +29,7 @@
     <% end %>
     <%# Flash Messages %>
     <% flash.each do |type, message| %>
-    <div class="flash <%= type %> fixed top-4 right-4 px-6 py-4 rounded-lg shadow-lg text-white z-50">
+    <div class="flash <%= type %> fixed top-4 right-4 px-6 py-4 rounded-lg shadow-lg text-white z-50 <%= type == 'notice' ? 'bg-green-500 border-green-600' : 'bg-red-500 border-red-600' %> border min-w-[250px] text-lg">
         <%= message %>
     </div>
     <% end %>
