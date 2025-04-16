@@ -69,5 +69,5 @@ end
 gem "devise", "~> 4.9"
 gem "roo"
 gem "roo-xls"
-
+gem 'pdf-reader', '~> 2.14', '>= 2.14.1'
 gem "tailwindcss-rails", "~> 4.0"

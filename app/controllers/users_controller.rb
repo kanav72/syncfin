@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
   def dashboard
-    @bank_statements = BankStatement.where(user: current_user) # Example: show uploaded files
+    @bank_statements = current_user.bank_statements # Lists user's bank statements
   end
 end
