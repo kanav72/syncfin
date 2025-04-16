@@ -18,7 +18,8 @@ class BankStatementsController < ApplicationController
 
     @bank_statement = current_user.bank_statements.new(bank_statement_params)
     if @bank_statement.save
-      if @bank_statement.process_excel
+      if @bank_statement.process_file
+        @bank_statement.save # Save metadata
         redirect_to bank_statements_path, notice: "File uploaded and processed successfully."
       else
         redirect_to bank_statements_path, alert: @bank_statement.errors.full_messages.join(", ")
